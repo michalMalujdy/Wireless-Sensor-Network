@@ -13,13 +13,13 @@ export class ChartsComponent implements OnInit {
 
   public readings: Reading[];
   public chart: any;
-  public fromDate: Date;
-  public toDate: Date;
+  public fromDate = this.getMonthBeginning();
+  public toDate = this.getNow();
 
   constructor(private readonly api: ApiClientService) { }
 
   ngOnInit() {
-    this.getDataAndUpdateChart(new Date(2000, 0), new Date(2020, 0));
+    this.getDataAndUpdateChart(this.fromDate, this.toDate);
   }
 
   private getDataAndUpdateChart(from: Date, to: Date) {
@@ -66,5 +66,14 @@ export class ChartsComponent implements OnInit {
 
   public OnRefreshClick() {
     this.getDataAndUpdateChart(this.fromDate, this.toDate);
+  }
+
+  private getMonthBeginning(): Date {
+    const now = new Date(Date.now());
+    return new Date(now.getFullYear(), now.getMonth());
+  }
+
+  private getNow(): Date {
+    return new Date(Date.now());
   }
 }
