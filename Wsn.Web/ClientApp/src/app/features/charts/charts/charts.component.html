@@ -1,10 +1,14 @@
-<p>
-  charts works!
-</p>
+<mat-form-field>
+  <input matInput [matDatepicker]="fromDate" placeholder="From">
+  <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+  <mat-datepicker #fromDate></mat-datepicker>
+</mat-form-field>
 
-<div *ngFor="let reading of readings">
-  <p>{{reading.value}}</p>
-</div>
+<mat-form-field>
+  <input matInput [matDatepicker]="toDate" placeholder="To">
+  <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+  <mat-datepicker #toDate></mat-datepicker>
+</mat-form-field>
 
 <div [hidden]="!chart" style="height: 200px;">
   <canvas id="canvas">{{ chart }}</canvas>

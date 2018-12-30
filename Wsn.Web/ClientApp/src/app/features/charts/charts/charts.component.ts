@@ -12,7 +12,7 @@ import { Chart } from 'chart.js';
 export class ChartsComponent implements OnInit {
 
   public readings: Reading[];
-  public chart: [];
+  public chart: any;
 
   constructor(private readonly api: ApiClientService) { }
 
