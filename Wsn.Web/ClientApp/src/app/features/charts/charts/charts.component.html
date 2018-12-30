@@ -6,9 +6,6 @@
   <p>{{reading.value}}</p>
 </div>
 
-<input [matDatepicker]="myDatepicker">
-<mat-datepicker #myDatepicker></mat-datepicker>
-
 <div [hidden]="!chart" style="height: 200px;">
   <canvas id="canvas">{{ chart }}</canvas>
 </div>
