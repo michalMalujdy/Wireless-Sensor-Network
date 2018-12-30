@@ -1,0 +1,32 @@
+<h3>{{title}}</h3>
+
+<div style="overflow-y: auto; height:500px;">
+
+  <table class="table table-sm table-hover">
+    <thead>
+      <tr>
+        <th>DeviceId</th>
+        <th>Date</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <div *ngIf="logs && logs.length > 0; then logsBlock; else emptyBlock"></div>
+
+        <ng-template #logsBlock>
+          <tr *ngFor="let log of logs">
+            <td>{{log.deviceId}}</td>
+            <td>{{log.date | date : 'MM/dd/yy, h:mm:ss'}}</td>
+            <td>{{log.value}}</td>
+          </tr>
+        </ng-template>
+
+        <ng-template #emptyBlock>
+          <tr>
+            <p>There is nothing to display</p>
+          </tr>
+        </ng-template>
+    </tbody>
+  </table>
+
+</div>
