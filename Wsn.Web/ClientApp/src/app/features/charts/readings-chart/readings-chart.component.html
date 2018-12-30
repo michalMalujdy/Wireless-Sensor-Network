@@ -1,18 +1,20 @@
 <h3>{{title}}</h3>
 
-<mat-form-field>
-  <input matInput [matDatepicker]="fromPicker" placeholder="From" [(ngModel)]="fromDate">
-  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-  <mat-datepicker #fromPicker></mat-datepicker>
-</mat-form-field>
+<div class="form-container">
+  <mat-form-field class="form-itema">
+    <input matInput [matDatepicker]="fromPicker" placeholder="From" [(ngModel)]="fromDate">
+    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #fromPicker></mat-datepicker>
+  </mat-form-field>
 
-<mat-form-field>
-  <input matInput [matDatepicker]="toPicker" placeholder="To" [(ngModel)]="toDate">
-  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-  <mat-datepicker #toPicker></mat-datepicker>
-</mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="toPicker" placeholder="To" [(ngModel)]="toDate">
+    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+    <mat-datepicker #toPicker></mat-datepicker>
+  </mat-form-field>
 
-<button mat-raised-button (click)="OnRefreshClick()">Refresh</button>
+  <button mat-raised-button (click)="OnRefreshClick()">Refresh</button>
+</div>
 
 <div [hidden]="!chart" style="height: 200px;">
   <canvas id="{{chartId}}">{{ chart }}</canvas>
