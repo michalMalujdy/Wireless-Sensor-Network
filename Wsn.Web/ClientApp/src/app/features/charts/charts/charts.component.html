@@ -1,17 +1,5 @@
-<mat-form-field>
-  <input matInput [matDatepicker]="fromPicker" placeholder="From" [(ngModel)]="fromDate">
-  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-  <mat-datepicker #fromPicker></mat-datepicker>
-</mat-form-field>
+<app-readings-chart chartId="light" title="Light" dataType="1"></app-readings-chart>
 
-<mat-form-field>
-  <input matInput [matDatepicker]="toPicker" placeholder="To" [(ngModel)]="toDate">
-  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-  <mat-datepicker #toPicker></mat-datepicker>
-</mat-form-field>
+<hr>
 
-<button mat-raised-button (click)="OnRefreshClick()">Refresh</button>
-
-<div [hidden]="!chart" style="height: 200px;">
-  <canvas id="canvas">{{ chart }}</canvas>
-</div>
+<app-readings-chart chartId="movement" title="Movement" dataType="2"></app-readings-chart>

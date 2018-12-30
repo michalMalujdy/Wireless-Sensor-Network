@@ -18,6 +18,7 @@ import { ChartsComponent } from './features/charts/charts/charts.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
+import { ReadingsChartComponent } from './features/charts/readings-chart/readings-chart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {MatButtonModule} from '@angular/material/button';
     FetchDataComponent,
     LightReadingsComponent,
     LoggerComponent,
-    ChartsComponent
+    ChartsComponent,
+    ReadingsChartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
