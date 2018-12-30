@@ -1,4 +1,7 @@
+import { ApiClientService } from './../../../core/api-client.service';
 import { Component, OnInit } from '@angular/core';
+import { Reading } from '../../../interfaces/resources/reading';
+import { DataType } from '../../../enums/DataType';
 
 @Component({
   selector: 'app-charts',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChartsComponent implements OnInit {
 
-  constructor() { }
+  public readings: Reading[];
+
+  constructor(private readonly api: ApiClientService) { }
 
   ngOnInit() {
+    this.api.getReadings(new Date(2000, 0), new Date(2020, 0), DataType.Light).subscribe(readings => {
+        this.readings = readings;
+      }
+    );
   }
 
 }

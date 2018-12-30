@@ -1,3 +1,4 @@
+import { ApiClientService } from './core/api-client.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -30,9 +31,10 @@ import { ChartsComponent } from './features/charts/charts/charts.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'logs', component: LightReadingsComponent },
+      { path: 'charts', component: ChartsComponent },
     ])
   ],
-  providers: [],
+  providers: [ApiClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
