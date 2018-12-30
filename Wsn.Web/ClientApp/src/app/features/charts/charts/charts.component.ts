@@ -13,18 +13,25 @@ export class ChartsComponent implements OnInit {
 
   public readings: Reading[];
   public chart: any;
+  public fromDate: Date;
+  public toDate: Date;
 
   constructor(private readonly api: ApiClientService) { }
 
   ngOnInit() {
-    this.api.getReadings(new Date(2000, 0), new Date(2020, 0), DataType.Light).subscribe(readings => {
-        this.readings = readings;
-        this.readings.forEach(r => r.date = new Date(r.date));
-        console.log(this.readings.map(r => r.date));
+    this.getDataAndUpdateChart(new Date(2000, 0), new Date(2020, 0));
+  }
 
-        this.chart = this.generateChart();
-      }
-    );
+  private getDataAndUpdateChart(from: Date, to: Date) {
+    this.api.getReadings(from, to, DataType.Light).subscribe(readings => {
+      this.setChart(readings);
+    });
+  }
+
+  private setChart(readings: Reading[]) {
+    this.readings = readings;
+    this.readings.forEach(r => r.date = new Date(r.date));
+    this.chart = this.generateChart();
   }
 
   private generateChart(): Chart {
@@ -57,4 +64,7 @@ export class ChartsComponent implements OnInit {
     return date.toLocaleString();
   }
 
+  public OnRefreshClick() {
+    this.getDataAndUpdateChart(this.fromDate, this.toDate);
+  }
 }

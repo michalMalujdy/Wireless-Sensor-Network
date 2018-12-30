@@ -17,6 +17,7 @@ import { LoggerComponent } from './features/readings/logger/logger.component';
 import { ChartsComponent } from './features/charts/charts/charts.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatFormFieldModule,
     MatNativeDateModule,
     MatInputModule,
+    MatButtonModule,
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
