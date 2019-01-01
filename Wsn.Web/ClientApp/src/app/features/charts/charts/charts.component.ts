@@ -11,5 +11,7 @@ import { Chart } from 'chart.js';
 })
 export class ChartsComponent implements OnInit {
 
+  ngOnInit() {
 
+  }
 }
