@@ -20,7 +20,7 @@ export class LightReadingsComponent implements OnInit {
   ngOnInit() {
     console.log('Setting up the hub...');
     this.hubConnection = new HubConnectionBuilder()
-      .withUrl(`${environment.general.api_hostname}/readings`)
+      .withUrl(`${environment.general.api_hostname}/sensorReadings`)
       .build();
 
     this.hubConnection
@@ -28,7 +28,7 @@ export class LightReadingsComponent implements OnInit {
       .then(() => console.log('Connection started!'))
       .catch(err => console.log('Error while establishing connection'));
 
-      this.hubConnection.on('sendLightReading', (readings: Reading[]) => {
+      this.hubConnection.on('sendSensorReadings', (readings: Reading[]) => {
         console.log(readings);
 
         const newLightReadings = readings.filter(r => r.dataType === DataType.Light);

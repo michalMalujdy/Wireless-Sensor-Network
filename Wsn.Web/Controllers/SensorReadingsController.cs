@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
-using Wsn.Application.Features.SensorReadings.Commands.CreateReadings;
-using Wsn.Core.Domain;
-using Wsn.Infrastructure.Resources;
-using Wsn.Infrastructure.Services.Interfaces;
+using Wsn.Application.Features.SensorReadings.Commands.CreateSensorReadings;
+using Wsn.Application.Features.SensorReadings.Queries.GetSensorReadings;
 
 namespace Wsn.Web.Controllers
 {
@@ -12,13 +10,6 @@ namespace Wsn.Web.Controllers
     [ApiController]
     public class SensorReadingsController : CommandQueryControllerBase
     {
-        private readonly IReadingsService _readingsService;
-
-        public SensorReadingsController(IReadingsService readingsService)
-        {
-            _readingsService = readingsService;
-        }
-
         /// <summary>
         /// Receives a reading from light sensor.
         /// </summary>
@@ -26,28 +17,25 @@ namespace Wsn.Web.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> CreateSensorReadings(CreateSensorReadingsCommand command)
+        public async Task<IActionResult> CreateSensorReadings(
+            [FromBody] CreateSensorReadingsCommand command)
         {
-            //await _readingsService.PostReadings(resource);
-
             await Mediator.Send(command);
-
             return Ok();
         }
 
         /// <summary>
-        /// Returns a collection of readings from light sensors.
+        /// Returns a collection of readings from sensors.
         /// </summary>
         [HttpGet]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetReadings(
-            [FromQuery] DateTimeOffset from,
-            [FromQuery] DateTimeOffset to,
-            [FromQuery] DataType dataType)
+            [FromBody] GetSensorReadingsQuery query)
         {
-            return Ok(await _readingsService.GetReadings(from, to, dataType));
+            var readings = await Mediator.Send(query);
+            return Ok(readings);
         }
 
         /// <summary>

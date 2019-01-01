@@ -11,11 +11,10 @@ using MyFinanceCube.Attributes;
 using Newtonsoft.Json;
 using SharpRaven;
 using Wsn.Application.Infrastructure;
+using Wsn.Application.Interfaces;
 using Wsn.Data;
-using Wsn.Infrastructure.Configs;
-using Wsn.Infrastructure.Services.Implementations;
-using Wsn.Infrastructure.Services.Interfaces;
-using Wsn.Web.Hubs;
+using Wsn.Infrastructure.Hubs;
+using Wsn.Infrastructure.Services;
 
 namespace Wsn.Web
 {
@@ -32,9 +31,10 @@ namespace Wsn.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMediatR(typeof(AssemblyMarker).GetTypeInfo().Assembly);
-
-            MapperConfig.Setup();
             services.AddAutoMapper(typeof(AssemblyMarker));
+            Mapper.Initialize(config => { });
+
+            services.AddTransient<ISensorReadingsHubService, SensorReadingsHubService>();
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
@@ -46,8 +46,6 @@ namespace Wsn.Web
 
 
             services.AddSignalR();
-            services.AddTransient<IReadingsService, ReadingService>();
-            services.AddTransient<ReadingsHub>();
 
 
             // Initialize Raven Client
@@ -97,7 +95,7 @@ namespace Wsn.Web
 
             app.UseSignalR(routes =>
             {
-                routes.MapHub<ReadingsHub>("/readings");
+                routes.MapHub<SensorReadingsHub>("/sensorReadings");
             });
 
             //app.UseHttpsRedirection();
