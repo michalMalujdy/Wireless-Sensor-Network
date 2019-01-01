@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Reading } from '../interfaces/resources/reading';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { ListResult } from './resources/list-result';
 
 @Injectable()
 export class ApiClientService {
@@ -14,8 +15,8 @@ export class ApiClientService {
 
   }
 
-  public getReadings(from: Date, to: Date, dataType: DataType): Observable<Reading[]> {
-    return this.http.get<Reading[]>(
+  public getReadings(from: Date, to: Date, dataType: DataType): Observable<ListResult<Reading>> {
+    return this.http.get<ListResult<Reading>>(
       `${this.hostname}/api/SensorReadings?from=${from.toISOString()}&to=${to.toISOString()}&dataType=${dataType}`);
   }
 }

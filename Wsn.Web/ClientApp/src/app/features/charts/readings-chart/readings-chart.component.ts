@@ -28,7 +28,7 @@ export class ReadingsChartComponent implements OnInit {
 
   private getDataAndUpdateChart(from: Date, to: Date) {
     this.api.getReadings(from, to, this.dataType).subscribe(readings => {
-      this.setChart(readings);
+      this.setChart(readings.items);
     });
   }
 

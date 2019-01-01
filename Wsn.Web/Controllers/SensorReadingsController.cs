@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using Wsn.Application.Features.SensorReadings.Commands.CreateSensorReadings;
 using Wsn.Application.Features.SensorReadings.Queries.GetSensorReadings;
+using Wsn.Core.Domain;
 
 namespace Wsn.Web.Controllers
 {
@@ -32,8 +33,17 @@ namespace Wsn.Web.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetReadings(
-            [FromBody] GetSensorReadingsQuery query)
+            [FromQuery] DateTimeOffset from,
+            [FromQuery] DateTimeOffset to,
+            [FromQuery] DataType dataType)
         {
+            var query = new GetSensorReadingsQuery()
+            {
+                From = from,
+                To = to,
+                DataType = dataType
+            };
+
             var readings = await Mediator.Send(query);
             return Ok(readings);
         }
