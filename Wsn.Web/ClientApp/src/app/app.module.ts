@@ -14,7 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LightReadingsComponent } from './features/readings/light-readings/light-readings.component';
 import { LoggerComponent } from './features/readings/logger/logger.component';
-import { ChartsComponent } from './features/charts/charts/charts.component';
+import { ChartsComponent } from './features/charts/charts.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';

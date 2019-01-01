@@ -15,6 +15,7 @@ export class ApiClientService {
   }
 
   public getReadings(from: Date, to: Date, dataType: DataType): Observable<Reading[]> {
-    return this.http.get<Reading[]>(`${this.hostname}/api/Readings?from=${from.toISOString()}&to=${to.toISOString()}&dataType=${dataType}`);
+    return this.http.get<Reading[]>(
+      `${this.hostname}/api/SensorReadings?from=${from.toISOString()}&to=${to.toISOString()}&dataType=${dataType}`);
   }
 }
