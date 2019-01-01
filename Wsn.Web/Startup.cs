@@ -1,3 +1,6 @@
+using System.Reflection;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MyFinanceCube.Attributes;
 using Newtonsoft.Json;
 using SharpRaven;
+using Wsn.Application.Infrastructure;
 using Wsn.Data;
 using Wsn.Infrastructure.Configs;
 using Wsn.Infrastructure.Services.Implementations;
@@ -27,7 +31,10 @@ namespace Wsn.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMediatR(typeof(AssemblyMarker).GetTypeInfo().Assembly);
+
             MapperConfig.Setup();
+            services.AddAutoMapper(typeof(AssemblyMarker));
 
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {

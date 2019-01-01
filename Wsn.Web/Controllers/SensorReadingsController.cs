@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using Wsn.Application.Features.SensorReadings.Commands.CreateReadings;
 using Wsn.Core.Domain;
 using Wsn.Infrastructure.Resources;
 using Wsn.Infrastructure.Services.Interfaces;
@@ -9,11 +10,11 @@ namespace Wsn.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReadingsController : ControllerBase
+    public class SensorReadingsController : CommandQueryControllerBase
     {
         private readonly IReadingsService _readingsService;
 
-        public ReadingsController(IReadingsService readingsService)
+        public SensorReadingsController(IReadingsService readingsService)
         {
             _readingsService = readingsService;
         }
@@ -22,14 +23,16 @@ namespace Wsn.Web.Controllers
         /// Receives a reading from light sensor.
         /// </summary>
         [HttpPost]
-        [Route("Light")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> PostReading(PostReadingsResource resource)
+        public async Task<IActionResult> CreateSensorReadings(CreateSensorReadingsCommand command)
         {
-            await _readingsService.PostReadings(resource);
-            return Ok("Elo world from server");
+            //await _readingsService.PostReadings(resource);
+
+            await Mediator.Send(command);
+
+            return Ok();
         }
 
         /// <summary>
