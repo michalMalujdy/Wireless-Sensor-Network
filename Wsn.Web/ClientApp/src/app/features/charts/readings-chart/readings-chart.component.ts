@@ -43,7 +43,8 @@ export class ReadingsChartComponent implements OnInit {
       type: 'line',
       data: {
         datasets: [{
-          data: this.readings.map(r => r.value)
+          data: this.readings.map(r => r.value),
+          backgroundColor: '#ebf3f9'
       }],
       labels: this.readings.map(r => this.getLabelDate(r.date)),
       },
@@ -74,7 +75,8 @@ export class ReadingsChartComponent implements OnInit {
 
   private getMonthBeginning(): Date {
     const now = new Date(Date.now());
-    return new Date(now.getFullYear(), now.getMonth());
+    now.setMonth(now.getMonth() - 1);
+    return now;
   }
 
   private getNow(): Date {
