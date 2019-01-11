@@ -9,13 +9,14 @@
 #define AP_PASSWORD "BVfc587uZweM"
 
 #define SWITCH_ON_INTERVAL 15000
+#define LED_PIN 0
 
 ESP8266WebServer server(80);
 unsigned long startIntervalMilis = 0;
 
 void setup() {
     // put your setup code here, to run once:
-    pinMode(0, OUTPUT);
+    pinMode(LED_PIN, OUTPUT);
     Serial.begin(BAUD_RATE);
 
     delay(10000); // Time to open terminal for debugging
@@ -34,7 +35,7 @@ void loop()
 
     if(millis() - startIntervalMilis > SWITCH_ON_INTERVAL)
     {
-        digitalWrite(0, LOW);
+        digitalWrite(LED_PIN, LOW);
     }
 }
 
@@ -49,7 +50,7 @@ void SwitchLightOn()
 {
     Serial.println("Endpoint hit: /light/on ");
     startIntervalMilis = millis();
-    digitalWrite(0, HIGH);
+    digitalWrite(LED_PIN, HIGH);
 
     server.send(200, "text/plain", "OK\r\n");
 }

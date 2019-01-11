@@ -8,12 +8,12 @@
 #define AP_SSID "ONO288B"
 #define AP_PASSWORD "BVfc587uZweM"
 
-#define INTERVAL 3000
+#define INTERVAL 4000
 #define SENSOR_PIN 0
 
 #define ROUTER_NODE_HOSTNAME "192.168.1.41"
 #define ROUTER_NODE_PORT "80"
-#define ROUTER_NODE_ENDPOINT "data/light"
+#define ROUTER_NODE_ENDPOINT "data/sensor"
 
 unsigned long lastMillis;
 
@@ -34,6 +34,8 @@ void loop()
 {
     if(millis() - lastMillis > INTERVAL)
     {
+        lastMillis = millis();
+
         if(digitalRead(SENSOR_PIN))
         {
             Serial.println("light");

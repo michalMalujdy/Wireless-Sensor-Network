@@ -10,7 +10,7 @@
 
 #define SERVER_NODE_HOSTNAME "192.168.1.41"
 #define SERVER_NODE_PORT "80"
-#define SERVER_NODE_ENDPOINT "data/movement"
+#define SERVER_NODE_ENDPOINT "data/sensor"
 
 void setup() {
     // put your setup code here, to run once:
@@ -34,7 +34,7 @@ void loop() {
 
         SendMovementOccured();
 
-        delay(REGULAR_INTERVAL);
+        delay(DETECTED_WAIT_MS);
     }
     else
     {

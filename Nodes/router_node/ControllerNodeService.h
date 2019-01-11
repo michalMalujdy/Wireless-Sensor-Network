@@ -70,11 +70,9 @@ ControllerNodeService::ControllerNodeService(
 
 void ControllerNodeService::SetupServer()
 {
-    server.on("/data/movement", [=](){ this->HandleReceivedSensorData(); });
-    server.on("/data/light", [=](){ this->HandleReceivedSensorData(); });
     server.on("/data/sensor", [=](){ this->HandleReceivedSensorData(); });
     server.begin();
-    Serial.println("Server is listening");
+    Serial.println("Controller is listening");
 }
 
 void ControllerNodeService::HandleRequests()
