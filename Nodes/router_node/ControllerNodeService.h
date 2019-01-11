@@ -37,7 +37,7 @@ class ControllerNodeService
     int currentBufferIndex;
     unsigned long lastMonitorBufferSentTime;
 
-    void HandleMovementData();
+    void HandleReceivedSensorData();
     void AddToMonitorBuffer(JsonObject& jsonObj);
     void SendMonitorBuffer();
     int CountReadingsToSend();
@@ -70,7 +70,9 @@ ControllerNodeService::ControllerNodeService(
 
 void ControllerNodeService::SetupServer()
 {
-    server.on("/data/movement", [=](){ this->HandleMovementData(); });
+    server.on("/data/movement", [=](){ this->HandleReceivedSensorData(); });
+    server.on("/data/light", [=](){ this->HandleReceivedSensorData(); });
+    server.on("/data/sensor", [=](){ this->HandleReceivedSensorData(); });
     server.begin();
     Serial.println("Server is listening");
 }
@@ -95,7 +97,7 @@ void ControllerNodeService::SendMonitorBufferIfTimePassed()
     }
 }
 
-void ControllerNodeService::HandleMovementData()
+void ControllerNodeService::HandleReceivedSensorData()
 {
     if (server.hasArg("plain") == false)
     {

@@ -6,7 +6,7 @@
 
 #define MONITOR_HOST "192.168.1.32"
 #define MONITOR_PORT "320"
-#define MONITOR_POST_ENDPOINT "api/Data/Light"
+#define MONITOR_POST_ENDPOINT "api/Data"
 #define MONITOR_BUFFER_CAPACITY 30
 #define SEND_MONITOR_BUFFER_INTERVAL_MILLIS 10000
 
@@ -21,7 +21,7 @@ void setup()
 
     delay(10000); // Time to open terminal for debugging
 
-	IPAddress ip(192, 168, 1, 80);
+	IPAddress ip(192, 168, 1, 41);
 	IPAddress gateway(192, 168, 1, 1);
 	IPAddress subnet(255, 255, 255, 0);
     WebService::ConnectToAccessPointDinamically(AP_SSID, AP_PASSWORD, ip, gateway, subnet);
