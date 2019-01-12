@@ -1,4 +1,3 @@
-
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include "WebService.h"
@@ -15,8 +14,8 @@ ESP8266WebServer server(80);
 unsigned long startIntervalMilis = 0;
 
 void setup() {
-    // put your setup code here, to run once:
     pinMode(LED_PIN, OUTPUT);
+    digitalWrite(LED_PIN, LOW);
     Serial.begin(BAUD_RATE);
 
     delay(10000); // Time to open terminal for debugging
@@ -42,8 +41,9 @@ void loop()
 void SetupServer()
 {
     server.on("/light/on", SwitchLightOn);
+    server.on("/light/off", SwitchLightOff);
     server.begin();
-    Serial.println("Server is listening");
+    Serial.println("Node is listening");
 }
 
 void SwitchLightOn()
@@ -52,5 +52,12 @@ void SwitchLightOn()
     startIntervalMilis = millis();
     digitalWrite(LED_PIN, HIGH);
 
+    server.send(200, "text/plain", "OK\r\n");
+}
+
+void SwitchLightOff()
+{
+    Serial.println("Endpoint hit: /light/on ");
+    digitalWrite(LED_PIN, LOW);
     server.send(200, "text/plain", "OK\r\n");
 }
