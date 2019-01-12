@@ -15,6 +15,9 @@ class ControllerNodeService
     String monitorHost;
     String monitorPort;
     String monitorPostEndpoint;
+    String lightSwitchHost;
+    String lightSwitchPort;
+    String lightSwitchEndpoint;
     int monitorBufferCapacity;
     int sendMonitorBufferIntervalMillis;
     int busyLedPin;
@@ -23,6 +26,9 @@ class ControllerNodeService
         String monitorHost,
         String monitorPort,
         String monitorPostEndpoint,
+        String lightSwitchHost,
+        String lightSwitchPort,
+        String lightSwitchEndpoint,
         int monitorBufferCapacity,
         int sendMonitorBufferIntervalMillis,
         int busyLedPin);
@@ -36,6 +42,8 @@ class ControllerNodeService
     MonitorBufferItem* monitorBuffer;
     int currentBufferIndex;
     unsigned long lastMonitorBufferSentTime;
+    int lastLightValue;
+    int lastMovementValue;
 
     void HandleReceivedSensorData();
     void AddToMonitorBuffer(JsonObject& jsonObj);
@@ -44,12 +52,17 @@ class ControllerNodeService
     String PreparePayload(MonitorBufferItem* monitorBuffer);
     void AddReadingToArray(JsonArray& readings, int index);
     void ClearMonitorBuffer();
+    void SendLightSwitchCommandIfConditionsAreMet();
+    void SetLastReadingData();
 };
 
 ControllerNodeService::ControllerNodeService(
     String monitorHost,
     String monitorPort,
     String monitorPostEndpoint,
+    String lightSwitchHost,
+    String lightSwitchPort,
+    String lightSwitchEndpoint,
     int monitorBufferCapacity,
     int sendMonitorBufferIntervalMillis,
     int busyLedPin)
@@ -57,6 +70,9 @@ ControllerNodeService::ControllerNodeService(
     this->monitorHost = monitorHost;
     this->monitorPort = monitorPort;
     this->monitorPostEndpoint = monitorPostEndpoint;
+    this->lightSwitchHost = lightSwitchHost;
+    this->lightSwitchPort = lightSwitchPort;
+    this->lightSwitchEndpoint = lightSwitchEndpoint;
     this->monitorBufferCapacity = monitorBufferCapacity;
     this->sendMonitorBufferIntervalMillis = sendMonitorBufferIntervalMillis;
     this->busyLedPin = busyLedPin;
@@ -66,6 +82,9 @@ ControllerNodeService::ControllerNodeService(
 
     this->monitorBuffer = new MonitorBufferItem[this->monitorBufferCapacity];
     this->ClearMonitorBuffer();
+
+    lastLightValue = 0;
+    lastMovementValue = 0;
 }
 
 void ControllerNodeService::SetupServer()
@@ -111,6 +130,10 @@ void ControllerNodeService::HandleReceivedSensorData()
 
     JsonObject& jsonObj = WebService::Deserialize(requestBody);
     this->AddToMonitorBuffer(jsonObj);
+
+    SetLastReadingData();
+
+    SendLightSwitchCommandIfConditionsAreMet();
 }
 
 void ControllerNodeService::AddToMonitorBuffer(JsonObject& jsonObj)
@@ -197,6 +220,36 @@ void ControllerNodeService::ClearMonitorBuffer()
     }
 
     this->currentBufferIndex = 0;
+}
+
+void ControllerNodeService::SendLightSwitchCommandIfConditionsAreMet()
+{
+    int lastReadingType = this->monitorBuffer[this->currentBufferIndex].DataType;
+
+    if(lastReadingType == 2 && this->lastMovementValue && !this->lastLightValue)
+    {
+        String lightSwitchNodeUrl = WebService::ConcatUrlHttp(
+            this->lightSwitchHost,
+            this->lightSwitchPort,
+            this->lightSwitchEndpoint
+        );
+
+        WebService::PostJson(lightSwitchNodeUrl, "");
+    }
+}
+
+void ControllerNodeService::SetLastReadingData()
+{
+    MonitorBufferItem lastReading = this->monitorBuffer[this->currentBufferIndex];
+
+    if(lastReading.DataType == 1)
+    {
+        this->lastLightValue = lastReading.Value;
+    }
+    else if(lastReading.DataType == 2)
+    {
+        this->lastMovementValue = lastReading.Value;
+    }
 }
 
 #endif
