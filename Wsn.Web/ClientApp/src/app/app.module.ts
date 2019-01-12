@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LightReadingsComponent } from './features/readings/light-readings/light-readings.component';
 import { LoggerComponent } from './features/readings/logger/logger.component';
 import { ChartsComponent } from './features/charts/charts.component';
@@ -25,7 +24,6 @@ import { ReadingsChartComponent } from './features/charts/readings-chart/reading
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    FetchDataComponent,
     LightReadingsComponent,
     LoggerComponent,
     ChartsComponent,
@@ -43,7 +41,6 @@ import { ReadingsChartComponent } from './features/charts/readings-chart/reading
     BrowserAnimationsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'logs', component: LightReadingsComponent },
       { path: 'charts', component: ChartsComponent },
     ])

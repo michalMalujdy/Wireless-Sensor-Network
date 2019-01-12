@@ -17,8 +17,10 @@ export class ReadingsChartComponent implements OnInit {
 
   public readings: Reading[];
   public chart: any;
-  public fromDate = this.getMonthBeginning();
+  public fromDate = this.getNow();
+  public fromTime = '00:00';
   public toDate = this.getNow();
+  public toTime = '12:00';
 
   constructor(private readonly api: ApiClientService) { }
 
@@ -27,7 +29,10 @@ export class ReadingsChartComponent implements OnInit {
   }
 
   private getDataAndUpdateChart(from: Date, to: Date) {
-    this.api.getReadings(from, to, this.dataType).subscribe(readings => {
+    const fromDateTime = this.concatenateDateTime(from, this.fromTime);
+    const toDateTime = this.concatenateDateTime(to, this.toTime);
+
+    this.api.getReadings(fromDateTime, toDateTime, this.dataType).subscribe(readings => {
       this.setChart(readings.items);
     });
   }
@@ -40,7 +45,7 @@ export class ReadingsChartComponent implements OnInit {
 
   private generateChart(): Chart {
     return this.chart = new Chart(this.chartId, {
-      type: 'line',
+      type: 'bar',
       data: {
         datasets: [{
           data: this.readings.map(r => r.value),
@@ -73,14 +78,21 @@ export class ReadingsChartComponent implements OnInit {
     this.getDataAndUpdateChart(this.fromDate, this.toDate);
   }
 
-  private getMonthBeginning(): Date {
-    const now = new Date(Date.now());
-    now.setMonth(now.getMonth() - 1);
-    return now;
-  }
-
   private getNow(): Date {
     return new Date(Date.now());
   }
 
+  private concatenateDateTime(date: Date, time: string): Date {
+    const hours = Number.parseInt(time.substring(0, time.indexOf(':')));
+    const minutes = Number.parseInt(time.substring(time.indexOf(':') + 1));
+
+    console.log(hours);
+    console.log(minutes);
+
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      hours, minutes);
+  }
 }
