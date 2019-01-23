@@ -15,8 +15,8 @@
 #define MONITOR_BUFFER_CAPACITY 30
 #define SEND_MONITOR_BUFFER_INTERVAL_MILLIS 12000
 
-#define AP_SSID "ONO288B"
-#define AP_PASSWORD "BVfc587uZweM"
+#define AP_SSID "Redmi"
+#define AP_PASSWORD ".enter001"
 
 ControllerNodeService* controllerNodeService;
 

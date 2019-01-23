@@ -4,8 +4,8 @@
 
 #define BAUD_RATE 115200
 
-#define AP_SSID "ONO288B"
-#define AP_PASSWORD "BVfc587uZweM"
+#define AP_SSID "Redmi"
+#define AP_PASSWORD ".enter001"
 
 #define INTERVAL 4000
 #define SENSOR_PIN 0

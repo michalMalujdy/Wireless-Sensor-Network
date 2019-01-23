@@ -4,8 +4,8 @@
 
 #define BAUD_RATE 115200
 
-#define AP_SSID "ONO288B"
-#define AP_PASSWORD "BVfc587uZweM"
+#define AP_SSID "Redmi"
+#define AP_PASSWORD ".enter001"
 
 #define SWITCH_ON_INTERVAL 15000
 #define LED_PIN 0
@@ -57,7 +57,8 @@ void SwitchLightOn()
 
 void SwitchLightOff()
 {
-    Serial.println("Endpoint hit: /light/on ");
+    Serial.println("Endpoint hit: /light/off ");
     digitalWrite(LED_PIN, LOW);
+
     server.send(200, "text/plain", "OK\r\n");
 }

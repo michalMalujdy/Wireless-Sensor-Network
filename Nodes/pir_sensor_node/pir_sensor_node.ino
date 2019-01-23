@@ -5,8 +5,8 @@
 #define REGULAR_INTERVAL 1000
 #define DETECTED_WAIT_MS 10000
 
-#define AP_SSID "ONO288B"
-#define AP_PASSWORD "BVfc587uZweM"
+#define AP_SSID "Redmi"
+#define AP_PASSWORD ".enter001"
 
 #define SERVER_NODE_HOSTNAME "192.168.1.41"
 #define SERVER_NODE_PORT "80"
@@ -15,6 +15,8 @@
 void setup() {
     // put your setup code here, to run once:
     pinMode(0, INPUT);
+    pinMode(2, OUTPUT);
+    digitalWrite(2, HIGH);
     Serial.begin(BAUD_RATE);
 
     delay(10000); // Time to open terminal for debugging
@@ -23,6 +25,7 @@ void setup() {
     IPAddress gateway(192, 168, 1, 1);
     IPAddress subnet(255, 255, 255, 0);
     WebService::ConnectToAccessPointDinamically(AP_SSID, AP_PASSWORD, ip, gateway, subnet);
+    digitalWrite(2, LOW);
 }
 
 void loop() {
